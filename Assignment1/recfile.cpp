@@ -7,13 +7,15 @@
 using namespace std;
 
 void initialize(FILE* file){
-	string records = "RECORDS-";
+	string records[100] = {};
 	for(int i=0; i<100; i++){
-		records = records + to_string(i);
-		cout << records;
-		fwrite(records.c_str(), sizeof(records), 1, file);
-		records = "RECORDS-";
+		records[i] = "RECORDS-" + to_string(i);
+		cout << records[i];
 	}
+	for(int i=0; i<100; i++){
+		fwrite(records[i].c_str(), sizeof(records[i].c_str()), 1, file);
+	}
+	//fwrite(records, sizeof(records), 1, file);
 }
 
 int main(int argc, char *argv[]){
@@ -50,4 +52,5 @@ int main(int argc, char *argv[]){
 	fgets(output, 5000, file);
 	os.write(output, 5000);
 	fclose(file);
+	return 0;
 }
