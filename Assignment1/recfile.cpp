@@ -6,20 +6,25 @@
 
 using namespace std;
 
+//Generates the file and the records
 void initialize(FILE* file){
-	string records[100] = {};
+	char* records[100] = {};
 	for(int i=0; i<100; i++){
-		records[i] = "RECORDS-" + to_string(i);
+		char* temp;
+		string str = "RECORDS-" + to_string(i);
+		temp = &str[0];
+		records[i] = temp;
 		cout << records[i];
 	}
 	for(int i=0; i<100; i++){
-		fwrite(records[i].c_str(), sizeof(records[i].c_str()), 1, file);
+		fwrite(records[i], sizeof(records[i]), 1, file);
 	}
-	//fwrite(records, sizeof(records), 1, file);
+	//fwrite(records, sizeof(records), sizeof(records[0]), file);
 }
 
+//Main function
 int main(int argc, char *argv[]){
-	FILE* file = fopen("records.dat", "wb");
+	FILE* file = fopen("records.dat", "wb+");
 	initialize(file);
 	std::istream is(std::cin.rdbuf());
 	std::ostream os(std::cout.rdbuf());
@@ -46,8 +51,8 @@ int main(int argc, char *argv[]){
 		return 1;
 	}
 	
-	//fseek(file , 7 , i1);
-	//fputs(index2, file);
+	fseek(file , 7 , i1);
+	fputs(index2, file);
 	char output[5000];
 	fgets(output, 5000, file);
 	os.write(output, 5000);
